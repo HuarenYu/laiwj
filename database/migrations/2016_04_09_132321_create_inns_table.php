@@ -26,7 +26,7 @@ class CreateInnsTable extends Migration
             //预订时间表
             $table->string('schedule', 1000);
             //所有者
-            $table->integer('owner_id')->unsigned();
+            $table->integer('owner_id')->unsigned()->index();
             //状态
             $table->enum('status', ['pending', 'online', 'offline']);
             $table->timestamps();

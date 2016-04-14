@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
             //订单
             $table->increments('id');
             //客户id
-            $table->integer('customer_id')->unsigned();
+            $table->integer('customer_id')->unsigned()->index();
             //入住人姓名
             $table->string('customer_name', 16);
             //入住人电话
@@ -31,7 +31,7 @@ class CreateOrdersTable extends Migration
             //总价
             $table->double('total_price', 10, 2);
             //客栈id
-            $table->integer('inner_id')->unsigned();
+            $table->integer('inn_id')->unsigned()->index();
             //订单状态
             $table->enum('status', ['created', 'payed', 'refunding', 'canceled', 'finished', 'refunded', 'refund_failed']);
             $table->timestamps();
