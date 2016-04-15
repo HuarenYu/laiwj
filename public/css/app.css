@@ -35,6 +35,7 @@ body {
   .inn .inn-des {
     position: relative;
     padding: 10px;
+    font-size: 15px;
     color: #565a5c; }
     .inn .inn-des .inn-host {
       display: block;
@@ -118,12 +119,24 @@ body {
   cursor: pointer;
   padding: 7px 21px;
   font-size: 14px;
-  text-decoration: none; }
+  text-decoration: none;
+  border-color: #c4c4c4;
+  background: white;
+  color: #565a5c; }
   .btn.btn-primary {
     border-color: #ff5a5f;
     border-bottom-color: #e00007;
     background-color: #ff5a5f;
     color: #fff; }
+    .btn.btn-primary:active {
+      border-color: #e00007;
+      background-color: #e00007;
+      color: #fff; }
+    .btn.btn-primary:focus, .btn.btn-primary:hover {
+      border-color: #ff7e82;
+      border-bottom-color: #fa0008;
+      background-color: #ff7e82;
+      color: #fff; }
   .btn.btn-block {
     display: block; }
 

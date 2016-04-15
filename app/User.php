@@ -40,7 +40,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function inns()
     {
-        return $this->hasMany('App\inn');
+        return $this->hasMany('App\inn', 'owner_id');
     }
 
 }

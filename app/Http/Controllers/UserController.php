@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
+use App\User;
 
 class UserController extends Controller
 {
@@ -87,7 +89,10 @@ class UserController extends Controller
 
     public function inn()
     {
-
-        return view('user.inn');
+        Auth::loginUsingId(1);
+        $u = Auth::user();
+        $user = User::find($u->id);
+        $inn = $user->inns;
+        return response()->json($inn);
     }
 }

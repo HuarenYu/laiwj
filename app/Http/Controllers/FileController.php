@@ -20,7 +20,7 @@ class FileController extends Controller
             $constraint->aspectRatio();
         })
         ->save(public_path().'/media/images/'.$fileSha1.'.jpg');
-        return response()->json(['file' => $fileSha1])->header('Access-Control-Allow-Origin', '*');
+        return response()->json(['file' => $fileSha1]);
     }
 
     public function upload()

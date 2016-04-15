@@ -35,4 +35,11 @@ Route::group(['prefix' => '/file'], function () {
 
     Route::post('/images', 'FileController@image');
     Route::get('/upload', 'FileController@upload');
+
+});
+
+Route::group(['prefix' => '/weixin'], function () {
+
+    Route::match(['get', 'post'], '/message', 'WeixinController@message');
+
 });
