@@ -25,8 +25,9 @@ Route::group(['prefix' => '/api'], function () {
 
 });
 
-Route::group(['prefix' => '/user'], function () {
+Route::group(['prefix' => '/user', 'middleware' => ['wechat.oauth']], function () {
 
+    Route::get('/home', 'UserController@home');
     Route::get('/inn', 'UserController@inn');
 
 });
