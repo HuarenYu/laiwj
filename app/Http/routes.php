@@ -30,3 +30,9 @@ Route::group(['prefix' => '/user'], function () {
     Route::get('/inn', 'UserController@inn');
 
 });
+
+Route::group(['prefix' => '/file'], function () {
+
+    Route::post('/images', 'FileController@image');
+    Route::get('/upload', 'FileController@upload');
+});
