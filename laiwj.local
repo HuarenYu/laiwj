@@ -2,10 +2,10 @@ server {
 
 	listen 80;
 
-	root /home/vagrant/code/laiwj-php/public;
+	root /home/vagrant/code/laiwj/public;
 	index index.html index.htm index.php;
 
-	server_name laiwj.local;
+	server_name laiwj.com;
 
 	location / {
 		try_files $uri $uri/ /index.php?$query_string;

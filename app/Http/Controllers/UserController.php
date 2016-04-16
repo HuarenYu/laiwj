@@ -14,16 +14,21 @@ class UserController extends Controller
     
     public function home()
     {
-        return response()->json(session('wechat.oauth_user'));
+        return view('user.home');
     }
 
     public function inn()
     {
-        Auth::loginUsingId(1);
         $u = Auth::user();
         $user = User::find($u->id);
         $inn = $user->inns;
-        return response()->json($inn);
+
+        return view('user.inn', ['inn' => $inn]);
+    }
+
+    public function trip()
+    {
+        return view('user.trip');
     }
 
 }

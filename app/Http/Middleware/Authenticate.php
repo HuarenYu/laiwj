@@ -38,6 +38,12 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
+                //来自微信端
+                $ua = $request->header('User-Agent');
+                if (strpos($ua, 'MicroMessenger')) {
+                    session('redirect_url', $request->fullUrl());
+                    return redirect('auth/login/weixin');
+                }
                 return redirect()->guest('auth/login');
             }
         }

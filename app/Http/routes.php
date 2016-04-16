@@ -25,10 +25,11 @@ Route::group(['prefix' => '/api'], function () {
 
 });
 
-Route::group(['prefix' => '/user', 'middleware' => ['wechat.oauth']], function () {
+Route::group(['prefix' => '/user', 'middleware' => ['auth']], function () {
 
     Route::get('/home', 'UserController@home');
     Route::get('/inn', 'UserController@inn');
+    Route::get('/trip', 'UserController@trip');
 
 });
 
@@ -43,4 +44,9 @@ Route::group(['prefix' => '/weixin'], function () {
 
     Route::match(['get', 'post'], '/message', 'WeixinController@message');
 
+    Route::get('/createMenu', 'WeixinController@createMenu');
+
 });
+
+Route::get('/auth/login/weixin', 'Auth\AuthController@weixinLogin');
+Route::get('/auth/login/weixinCallback', 'Auth\AuthController@weixinLoginCallback');

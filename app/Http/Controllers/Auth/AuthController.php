@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Auth as Auth;
+
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -62,4 +65,52 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function weixinLogin()
+    {
+        $wechat = app('wechat');
+        $response = $wechat->oauth->scopes(['snsapi_userinfo'])->redirect();
+        return $response;
+    }
+
+    public function weixinLoginCallback()
+    {
+        $wechat = app('wechat');
+        $user = $wechat->oauth->user();
+        $oldUser = User::where('openid', $user->getId())->first();
+        $originalInfo = $user->getOriginal();
+        //如果没有登陆过
+        if (empty($oldUser)) {
+            $newUser = new User;
+            $newUser->openid = $originalInfo['openid'];
+            $newUser->name = $originalInfo['nickname'];
+            $newUser->headimgurl = $originalInfo['headimgurl'];
+            $newUser->sex = $originalInfo['sex'];
+            $newUser->province = $originalInfo['province'];
+            $newUser->city = $originalInfo['city'];
+            $newUser->country = $originalInfo['country'];
+            $newUser->language = $originalInfo['language'];
+            $newUser->privilege = json_encode($originalInfo['privilege']);
+            $newUser->access_token = $user->token['access_token'];
+            $newUser->save();
+            $oldUser = $newUser;
+        } else {
+            //如果已经登陆过
+            $oldUser->openid = $originalInfo['openid'];
+            $oldUser->name = $originalInfo['nickname'];
+            $oldUser->headimgurl = $originalInfo['headimgurl'];
+            $oldUser->sex = $originalInfo['sex'];
+            $oldUser->province = $originalInfo['province'];
+            $oldUser->city = $originalInfo['city'];
+            $oldUser->country = $originalInfo['country'];
+            $oldUser->language = $originalInfo['language'];
+            $oldUser->privilege = json_encode($originalInfo['privilege']);
+            $oldUser->access_token = $user->token['access_token'];
+            $oldUser->save();
+        }
+        Auth::login($oldUser);
+        $redirect_url = session('redirect_url') ? session('redirect_url') : '/user/home';
+        return redirect($redirect_url);
+    }
+
 }

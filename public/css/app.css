@@ -199,4 +199,18 @@ input[type="checkbox"],
   color: #565a5c;
   width: 100%; }
 
+.message-center {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); }
+  .message-center .message {
+    margin-bottom: 20px; }
+
+.inn-form {
+  display: none; }
+
 /*# sourceMappingURL=app.css.map */
