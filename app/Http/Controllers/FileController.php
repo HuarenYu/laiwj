@@ -11,6 +11,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class FileController extends Controller
 {
+
     public function image(Request $request)
     {
         $file = $request->file('image');
@@ -20,11 +21,14 @@ class FileController extends Controller
             $constraint->aspectRatio();
         })
         ->save(public_path().'/media/images/'.$fileSha1.'.jpg');
-        return response()->json(['file' => $fileSha1]);
+        return response()
+            ->json(['image' => $fileSha1.'.jpg'])
+            ->header('Access-Control-Allow-Origin', '*');
     }
 
     public function upload()
     {
         return view('test');
     }
+
 }
