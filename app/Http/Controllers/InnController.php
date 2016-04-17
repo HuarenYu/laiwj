@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Inn;
+use Auth;
+
 class InnController extends Controller
 {
     /**
@@ -16,7 +19,7 @@ class InnController extends Controller
      */
     public function index()
     {
-        return response()->json(['name' => 'bb']);
+
     }
 
     /**
@@ -37,7 +40,29 @@ class InnController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:30',
+            'hostName' => 'required|max:10',
+            'hostPhone' => 'required|min:11|max:16',
+            'price' => 'required|numeric',
+            'image' => 'required',
+            'detail' => 'required',
+        ]);
+        $inn = new Inn;
+        $inn->name = $request->name;
+        $inn->hostName = $request->hostName;
+        $inn->hostPhone = $request->hostPhone;
+        $inn->price = $request->price;
+        $inn->images = json_encode([$request->image]);
+        $inn->detail = $request->detail;
+        $inn->description = '';
+        $inn->country = '中国';
+        $inn->province = '贵州';
+        $inn->city = '黎平';
+        $inn->owner_id = Auth::user()->id;
+        $inn->status = 'pending';
+        $inn->save();
+        return response()->json($inn);
     }
 
     /**
@@ -48,7 +73,6 @@ class InnController extends Controller
      */
     public function show($id)
     {
-        return response()->json(['id' => $id]);
     }
 
     /**
@@ -87,7 +111,8 @@ class InnController extends Controller
 
     public function detail($id)
     {
-        return view('inn.detail', ['id' => $id]);
+        $inn = Inn::with('host')->findOrFail($id);
+        return view('inn.detail', ['inn' => $inn]);
     }
 
     public function order($id)

@@ -80,13 +80,13 @@ body {
       color: #82888a; }
   .inn-detail .inn-desc {
     padding: 0 12.5px; }
-    .inn-detail .inn-desc > h3 {
+    .inn-detail .inn-desc > h1 {
       font-size: 18px;
       line-height: 1;
       margin-top: 50px;
       margin-bottom: 25px;
       text-align: center; }
-    .inn-detail .inn-desc > h4 {
+    .inn-detail .inn-desc > h2 {
       line-height: 1;
       font-size: 16px;
       margin: 12.5px 0; }

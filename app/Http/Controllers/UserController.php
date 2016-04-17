@@ -21,8 +21,7 @@ class UserController extends Controller
     {
         $u = Auth::user();
         $user = User::find($u->id);
-        $inn = $user->inns;
-
+        $inn = $user->inn;
         return view('user.inn', ['inn' => $inn]);
     }
 

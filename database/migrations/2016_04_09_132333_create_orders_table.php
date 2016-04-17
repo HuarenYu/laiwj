@@ -27,9 +27,9 @@ class CreateOrdersTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             //单价
-            $table->double('per_price', 10, 2);
+            $table->decimal('per_price', 10, 2);
             //总价
-            $table->double('total_price', 10, 2);
+            $table->decimal('total_price', 10, 2);
             //客栈id
             $table->integer('inn_id')->unsigned()->index();
             //订单状态

@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Inn;
+
 class IndexController extends Controller
 {
 
     public function index()
     {
-        return view('index');
+        $inns = Inn::where('status', 'online')->with('host')->get();
+        return view('index', ['inns' => $inns]);
     }
 
 }
