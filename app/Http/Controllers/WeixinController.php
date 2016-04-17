@@ -18,7 +18,7 @@ class WeixinController extends Controller
         Log::info('request arrived.'); 
         
         $wechat = app('wechat');
-        $wechat->server->setMessageHandler(function ($message) {
+        $wechat->server->setMessageHandler(function ($message) use ($wechat) {
 
             switch ($message->MsgType)
             {
@@ -26,7 +26,6 @@ class WeixinController extends Controller
                 # 事件消息...
                 $oldUser = User::where('openid', $message->FromUserName)->first();
                 if ($message->Event == 'subscribe') {
-                    $wechat = app('webchat');
                     $userService = $wechat->user;
                     $user = $userService->get($message->FromUserName);
                     //如果第一次关注
