@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '首页')
+@section('title', '我的行程')
 
 @section('content')
 <div>my trip</div>

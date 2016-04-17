@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group-100">
                         <label for="">详细介绍一下吧</label>
-                        <textarea id="detail" name="detail">
+                        <div id="detail" class="form-input inn-form-detail">
                             <h1>关于我的家</h1>
                             <p>写一段介绍吧...</p>
                             <h2>住宿条件</h2>
@@ -58,7 +58,7 @@
                             <p>客人如何到你家</p>
                             <h2>注意事项</h2>
                             <p>客人需要注意哪些</p>
-                        </textarea>
+                        </div>
                     </div>
                     <div class="form-group-100 submit">
                         <button type="submit" class="btn btn-primary btn-block">发布</button>
@@ -94,9 +94,7 @@
                     </div>
                     <div class="form-group-100">
                         <label for="">详细介绍一下吧</label>
-                        <textarea id="detail" name="detail">
-                            {{ $inn->detail }}
-                        </textarea>
+                        <div id="detail" class="form-input inn-form-detail">{!! $inn->detail !!}</div>
                     </div>
                     <div class="form-group-100 submit">
                         <button type="submit" class="btn btn-primary btn-block">保存修改</button>
@@ -105,16 +103,12 @@
             </form>
         </div>
     @endif
-    
-    <script src="http://121.41.8.56/tinymce/tinymce.min.js"></script>
-    <script src="http://121.41.8.56/tinymce/zh_CN.js"></script>
+    <link rel="stylesheet" href="/medium-editor/css/medium-editor.min.css">
+    <link rel="stylesheet" href="/medium-editor/css/themes/default.min.css">
+    <script src="/medium-editor/js/medium-editor.min.js"></script>
     <script>
-        tinymce.init({
-            selector: '#detail',
-            toolbar: false,
-            height : 400,
-        });
         var inn = {};
+        var editor = new MediumEditor('#detail');
         $('#addInn').on('click', function (e) {
             $('.message-center').remove();
             $('.inn-form').show();
@@ -126,7 +120,7 @@
             inn.hostName = $('input[name=hostName]').val();
             inn.hostPhone = $('input[name=hostPhone]').val();
             inn.price = $('input[name=price]').val();
-            inn.detail = tinymce.activeEditor.getContent({format: 'raw'});
+            inn.detail = $('#detail').html();
             if (!inn.name || inn.name === '') {
                 alert('家的名字不能为空');
                 return;
