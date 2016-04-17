@@ -2,6 +2,11 @@
 
 @section('title', '我的家')
 
+@section('stylesheet')
+    <link rel="stylesheet" href="/medium-editor/css/medium-editor.min.css">
+    <link rel="stylesheet" href="/medium-editor/css/themes/default.min.css">
+@endsection
+
 @section('content')
 
     @if(empty($inn))
@@ -103,8 +108,6 @@
             </form>
         </div>
     @endif
-    <link rel="stylesheet" href="/medium-editor/css/medium-editor.min.css">
-    <link rel="stylesheet" href="/medium-editor/css/themes/default.min.css">
     <script src="/medium-editor/js/medium-editor.min.js"></script>
     <script>
         var inn = {};

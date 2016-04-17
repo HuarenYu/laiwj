@@ -141,6 +141,7 @@ class InnController extends Controller
 
     public function order($id)
     {
-        return view('inn.order', ['id' => $id]);
+        $inn = Inn::with('host')->findOrFail($id);
+        return view('inn.order', ['inn' => $inn]);
     }
 }
