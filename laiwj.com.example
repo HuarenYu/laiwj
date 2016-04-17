@@ -2,7 +2,7 @@ server {
 
 	listen 80;
 
-	root /home/vagrant/code/laiwj/public;
+	root /home/www/laiwj/public;
 	index index.html index.htm index.php;
 
 	server_name laiwj.com;
