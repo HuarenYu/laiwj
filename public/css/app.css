@@ -211,6 +211,7 @@ input[type="checkbox"],
     margin-bottom: 20px; }
 
 .inn-form {
-  display: none; }
+  display: none;
+  padding-bottom: 160px; }
 
 /*# sourceMappingURL=app.css.map */

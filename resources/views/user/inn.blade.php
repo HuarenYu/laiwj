@@ -106,8 +106,8 @@
         </div>
     @endif
     
-    <script src="/tinymce/tinymce.min.js"></script>
-    <script src="/tinymce/zh_CN.js"></script>
+    <script src="http://121.41.8.56/tinymce/tinymce.min.js"></script>
+    <script src="http://121.41.8.56/tinymce/zh_CN.js"></script>
     <script>
         tinymce.init({
             selector: '#detail',
