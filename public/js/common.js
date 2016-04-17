@@ -31,6 +31,22 @@
         });
     };
 
+    //订单
+    var orders = API.orders = {};
+    var ordersUrl = API.orders.url = API_BASE_URL + '/orders/';
+
+    orders.getAll = function() {
+        return $.get(ordersUrl);
+    };
+
+    orders.get = function(id) {
+        return $.get(ordersUrl + id);
+    };
+
+    orders.add = function(order) {
+        return $.post(ordersUrl, order);
+    };
+
 
 })(window, jQuery);
 //# sourceMappingURL=common.js.map

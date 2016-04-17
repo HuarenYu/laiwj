@@ -38,12 +38,12 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'customer_name' => 'required',
-            'customer_phone' => 'required',
-            'customer_count' => 'required',
-            'start_date' => '',
-            'end_date' => '',
-            'inn_id' => '',
+            'customer_name' => 'required|max:20',
+            'customer_phone' => 'required|max:16',
+            'customer_count' => 'required|numeric',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'inn_id' => 'required|numeric',
         ]);
     }
 

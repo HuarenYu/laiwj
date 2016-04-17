@@ -14,29 +14,30 @@
     </div>
     <form id="orderForm">
         {{ csrf_field() }}
+        <input name="inn_id" type="hidden" value="{{ $inn->id }}">
         <div class="form">
             <div class="form-group-50">
                 <label for="">入住</label>
-                <input name="startDate" type="text">
+                <input name="start_date" type="text" required>
             </div>
             <div class="form-group-50">
                 <label for="">离开</label>
-                <input name="endDate" type="text">
+                <input name="end_date" type="text" required>
             </div>
             <div class="form-group-100">
                 <label for="">入住人数</label>
-                <input type="text">
+                <input name="customer_count" type="text" required>
             </div>
             <div class="form-group-100">
                 <label for="">联系人</label>
-                <input type="text">
+                <input name="customer_name" type="text" required>
             </div>
             <div class="form-group-100">
                 <label for="">联系电话</label>
-                <input type="text">
+                <input name="customer_phone" type="text" required>
             </div>
             <div class="form-group-100 submit">
-                <button class="btn btn-primary btn-block">提交订单</button>
+                <button type="submit" class="btn btn-primary btn-block">提交订单</button>
             </div>
         </div>
     </form>
@@ -77,16 +78,27 @@
     $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 </script>
 <script>
-    $.datepicker.setDefaults({
-        dateFormat: 'yy-mm-dd'
-    });
     var array = ["2016-04-18", "2016-04-16", "2016-04-19"];
-    $('input[name=startDate]').datepicker({
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
         beforeShowDay: function(date){
             var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
             return [ array.indexOf(string) == -1 ]
         }
     });
-    $('input[name=endDate]').datepicker();
+    $('input[name=start_date]').datepicker();
+    $('input[name=end_date]').datepicker();
+    $('#orderForm').on('submit', function (e) {
+        e.preventDefault();
+        API.
+        orders.
+        add($(this).serialize()).
+        then(function (resp) {
+
+        }).
+        fail(function (err) {
+            alert(JSON.stringify(err.responseJSON));
+        });
+    });
 </script>
 @endsection
