@@ -73,5 +73,19 @@
         $('#createInnForm').on('submit', function (e) {
 
         })
+        $('input[name=image]').on('change', function (e) {
+            var fd = new FormData();
+            fd.append('image', this.files[0]);
+            $.ajax({
+                url: 'http://121.41.8.56/file/image',
+                method: 'POST',
+                processData: false,
+                contentType: false,
+            }).then(function (resp) {
+                console.log(resp);
+            }).fail(function (error) {
+                console.log(error);
+            });
+        });
     </script>
 @endsection
