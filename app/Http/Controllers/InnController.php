@@ -40,6 +40,9 @@ class InnController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return response('permission denied', 403);
+        }
         $this->validate($request, [
             'name' => 'required|max:30',
             'hostName' => 'required|max:10',
@@ -95,7 +98,28 @@ class InnController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (!Auth::check()) {
+            return response('permission denied', 403);
+        }
+        $this->validate($request, [
+            'id' => 'required',
+            'name' => 'required|max:30',
+            'hostName' => 'required|max:10',
+            'hostPhone' => 'required|min:11|max:16',
+            'price' => 'required|numeric',
+            'detail' => 'required',
+        ]);
+        $inn = Inn::findOrFail($id);
+        $inn->name = $request->name;
+        $inn->hostName = $request->hostName;
+        $inn->hostPhone = $request->hostPhone;
+        $inn->price = $request->price;
+        $inn->detail = $request->detail;
+        if ($request->image && $request->image != '') {
+            $inn->images = json_encode([$request->image]);
+        }
+        $inn->save();
+        return response()->json($inn);
     }
 
     /**

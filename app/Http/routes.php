@@ -50,3 +50,4 @@ Route::group(['prefix' => '/weixin'], function () {
 
 Route::get('/auth/login/weixin', 'Auth\AuthController@weixinLogin');
 Route::get('/auth/login/weixinCallback', 'Auth\AuthController@weixinLoginCallback');
+Route::get('/auth/logout', 'Auth\AuthController@getLogout');

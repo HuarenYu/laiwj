@@ -73,7 +73,7 @@ class AuthController extends Controller
         return $response;
     }
 
-    public function weixinLoginCallback()
+    public function weixinLoginCallback(Request $request)
     {
         $wechat = app('wechat');
         $user = $wechat->oauth->user();
@@ -109,8 +109,7 @@ class AuthController extends Controller
             $oldUser->save();
         }
         Auth::login($oldUser);
-        $redirect_url = session('redirect_url') ? session('redirect_url') : '/user/home';
-        return redirect($redirect_url);
+        return redirect($request->session()->pull('redirect_url', '/'));
     }
 
 }

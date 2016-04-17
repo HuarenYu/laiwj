@@ -21,7 +21,15 @@
 
     inns.add = function(inn) {
         return $.post(innsUrl, inn);
-    }
+    };
+
+    inns.update = function (inn) {
+        return $.ajax({
+            url: innsUrl + inn.id,
+            method: 'PUT',
+            data: inn
+        });
+    };
 
 
 })(window, jQuery);

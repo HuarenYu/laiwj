@@ -41,7 +41,7 @@ class Authenticate
                 //来自微信端
                 $ua = $request->header('User-Agent');
                 if (strpos($ua, 'MicroMessenger')) {
-                    session('redirect_url', $request->fullUrl());
+                    $request->session()->put('redirect_url', $request->fullUrl());
                     return redirect('auth/login/weixin');
                 }
                 return redirect()->guest('auth/login');

@@ -139,10 +139,6 @@
                 alert('你的联系电话不能为空');
                 return;
             }
-            if (!inn.image || inn.image === '') {
-                alert('你的图片不能为空');
-                return;
-            }
             if (!inn.price || inn.price === '') {
                 alert('每天每人花费不能为空');
                 return;
@@ -153,9 +149,23 @@
             }
             var action = $(this).data('action');
             if (action === 'create') {
+                if (!inn.image || inn.image === '') {
+                    alert('你的图片不能为空');
+                    return;
+                }
                 API.inns.add(inn).
                 then(function (resp) {
                     alert('添加成功');
+                    window.location = '/inns/' + resp.id;
+                }).fail(function (err) {
+                    alert(JSON.stringify(err.responseJSON));
+                });
+            }
+            if (action === 'update') {
+                inn.id = $('input[name=id]').val();
+                API.inns.update(inn).
+                then(function (resp) {
+                    alert('修改成功');
                     window.location = '/inns/' + resp.id;
                 }).fail(function (err) {
                     alert(JSON.stringify(err.responseJSON));
