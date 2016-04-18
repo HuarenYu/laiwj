@@ -146,10 +146,12 @@
             }
             var action = $(this).data('action');
             if (action === 'create') {
+                /*
                 if (!inn.image || inn.image === '') {
                     alert('你的图片不能为空');
                     return;
                 }
+                */
                 API.inns.add(inn).
                 then(function (resp) {
                     alert('添加成功');

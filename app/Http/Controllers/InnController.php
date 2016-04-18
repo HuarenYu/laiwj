@@ -48,7 +48,6 @@ class InnController extends Controller
             'hostName' => 'required|max:10',
             'hostPhone' => 'required|min:11|max:16',
             'price' => 'required|numeric',
-            'image' => 'required',
             'detail' => 'required',
         ]);
         $inn = new Inn;
@@ -56,7 +55,8 @@ class InnController extends Controller
         $inn->hostName = $request->hostName;
         $inn->hostPhone = $request->hostPhone;
         $inn->price = $request->price;
-        $inn->images = json_encode([$request->image]);
+        $image = isset($request->image) ? $request->image : 'default.jpg';
+        $inn->images = json_encode([$image]);
         $inn->detail = $request->detail;
         $inn->description = '';
         $inn->country = '中国';
