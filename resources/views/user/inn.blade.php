@@ -185,7 +185,7 @@
             }).then(function (resp) {
                 inn.image = resp.image;
             }).fail(function (error) {
-                alert('网络错误,请稍后重试!');
+                console.log('image upload error.');
             });
         });
     </script>
