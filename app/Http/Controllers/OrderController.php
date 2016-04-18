@@ -52,6 +52,11 @@ class OrderController extends Controller
 
 
         $inn = Inn::findOrFail($request->inn_id);
+        if (empty($inn)) {
+            return response('客栈id错误', 401);
+        }
+        $innSchedule = json_decode($inn->schedule);
+        
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
         //预定的日期
