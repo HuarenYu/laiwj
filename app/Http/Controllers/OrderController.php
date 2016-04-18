@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Inn;
+
+use Carbon\Carbon;
+use Mockery\Exception;
 
 class OrderController extends Controller
 {
@@ -45,6 +49,20 @@ class OrderController extends Controller
             'end_date' => 'required|date',
             'inn_id' => 'required|numeric',
         ]);
+
+
+        $inn = Inn::findOrFail($request->inn_id);
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
+        //预定的日期
+        $bookDates = [];
+        while ($startDate->lte($endDate)) {
+            $bookDates[] = Carbon::instance($startDate);
+            $startDate->addDay(1);
+        }
+
+        return response()->json($bookDates);
+
     }
 
     /**
