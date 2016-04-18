@@ -106,17 +106,22 @@ class WeixinController extends Controller
         $menu = $wechat->menu;
         $buttons = [
             [
-                "type" => "view",
-                "name" => "出发",
-                "url"  => "http://laiwj.com"
+                'type' => 'view',
+                'name' => '出发',
+                'url'  => 'http://laiwj.com'
             ],
             [
-                "name"       => "我的",
-                "sub_button" => [
+                'name'       => '我的',
+                'sub_button' => [
                     [
-                        "type" => "view",
-                        "name" => "行程",
-                        "url"  => "http://laiwj.com/user/trip"
+                        'type' => 'view',
+                        'name' => '行程',
+                        'url'  => 'http://laiwj.com/user/trip'
+                    ],
+                    [
+                        'type' => 'view',
+                        'name' => '家',
+                        'url'  => 'http://laiwj.com/user/inn'
                     ],
                 ],
             ],
