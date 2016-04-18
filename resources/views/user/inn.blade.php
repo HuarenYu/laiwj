@@ -3,8 +3,8 @@
 @section('title', '我的家')
 
 @section('stylesheet')
-    <link rel="stylesheet" href="/medium-editor/css/medium-editor.min.css">
-    <link rel="stylesheet" href="/medium-editor/css/themes/default.min.css">
+    <link rel="stylesheet" href="http://121.41.8.56/medium-editor/css/medium-editor.min.css">
+    <link rel="stylesheet" href="http://121.41.8.56/medium-editor/css/themes/default.min.css">
 @endsection
 
 @section('content')
@@ -108,9 +108,9 @@
             </form>
         </div>
     @endif
-    <script src="/plupload/plupload.full.min.js"></script>
-    <script src="/qiniu/qiniu.min.js"></script>
-    <script src="/medium-editor/js/medium-editor.min.js"></script>
+    <script src="http://121.41.8.56/plupload/plupload.full.min.js"></script>
+    <script src="http://121.41.8.56/qiniu/qiniu.min.js"></script>
+    <script src="http://121.41.8.56/medium-editor/js/medium-editor.min.js"></script>
     <script>
         var inn = {};
         var editor = new MediumEditor('#detail');
