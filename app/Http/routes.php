@@ -37,6 +37,7 @@ Route::group(['prefix' => '/file'], function () {
 
     Route::post('/images', 'FileController@image');
     Route::get('/upload', 'FileController@upload');
+    Route::get('/uploadToken', 'FileController@uploadToken');
 
 });
 

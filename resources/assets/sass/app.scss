@@ -249,8 +249,13 @@ input[type="checkbox"],
     }
 }
 .inn-form {
-    display: none;
     padding-bottom: 160px;
+    &.hidden {
+        visibility: hidden;
+    }
+    &.visible {
+        visibility: visible;
+    }
     .inn-form-detail {
         font-size: 14px;
         h1 {

@@ -17,6 +17,11 @@ elixir(function(mix) {
 
 elixir(function(mix) {
     mix.scripts(['lib/jquery-2.2.3.js'], 'public/js/lib.js')
-    .scripts(['common/settings.js', 'common/form.js', 
-        'common/api.js'], 'public/js/common.js');
+    .scripts(['common/settings.js',
+        'common/form.js',
+        'common/api.js',
+        'common/global-error.js'
+        ], 
+        'public/js/common.js'
+    );
 });

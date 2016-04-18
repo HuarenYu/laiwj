@@ -41,7 +41,7 @@ class InnController extends Controller
     public function store(Request $request)
     {
         if (!Auth::check()) {
-            return response('permission denied', 403);
+            return response('permission denied', 401);
         }
         $this->validate($request, [
             'name' => 'required|max:30',
@@ -99,7 +99,7 @@ class InnController extends Controller
     public function update(Request $request, $id)
     {
         if (!Auth::check()) {
-            return response('permission denied', 403);
+            return response('permission denied', 401);
         }
         $this->validate($request, [
             'id' => 'required',

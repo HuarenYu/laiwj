@@ -6,7 +6,7 @@
     @foreach($inns as $inn)
     <div class="inn">
         <a class="inn-captures" href="/inns/{{ $inn->id }}">
-            <img src="http://121.41.8.56/media/images/{{ json_decode($inn->images)[0] }}" alt="{{ $inn->name }}">
+            <img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ json_decode($inn->images)[0] }}?imageView2/1/w/400/h/300/q/100/format/jpg" alt="{{ $inn->name }}">
             <div class="inn-price">
                 <sup>￥</sup>{{ $inn->price }}
             </div>
