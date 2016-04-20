@@ -12,4 +12,9 @@ class Inn extends Model
         return $this->belongsTo('App\User', 'owner_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Orders', 'inn_id');
+    }
+
 }

@@ -43,4 +43,9 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasOne('App\Inn', 'owner_id');
     }
 
+    public function trips()
+    {
+        return $this->hasMany('App\Order', 'customer_id');
+    }
+
 }

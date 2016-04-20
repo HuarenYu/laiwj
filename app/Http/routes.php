@@ -30,6 +30,7 @@ Route::group(['prefix' => '/user', 'middleware' => ['auth']], function () {
     Route::get('/home', 'UserController@home');
     Route::get('/inn', 'UserController@inn');
     Route::get('/trip', 'UserController@trip');
+    Route::get('/trip/{id}', 'UserController@tripDetail');
 
 });
 
