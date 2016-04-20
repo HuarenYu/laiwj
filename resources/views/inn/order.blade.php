@@ -96,7 +96,7 @@
         orders.
         add($(this).serialize()).
         then(function (resp) {
-            window.location = '/user/order/' + resp.id;
+            window.location = '/user/trip/' + resp.id;
         }).
         fail(function (err) {
             alert(err.responseText);
