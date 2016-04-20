@@ -43,6 +43,8 @@
                         <div id="detail" class="form-input inn-form-detail">
                             <h1>关于我的家</h1>
                             <p>写一段介绍吧...</p>
+                            <h2>费用说明</h2>
+                            <p>xxx元仅包含每人每天住宿和餐饮，其他费用请自理</p>
                             <h2>住宿条件</h2>
                             <p>客房数：</p>
                             <p>可住人数：</p>
