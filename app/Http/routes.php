@@ -52,3 +52,8 @@ Route::group(['prefix' => '/weixin'], function () {
 Route::get('/auth/login/weixin', 'Auth\AuthController@weixinLogin');
 Route::get('/auth/login/weixinCallback', 'Auth\AuthController@weixinLoginCallback');
 Route::get('/auth/logout', 'Auth\AuthController@getLogout');
+
+Route::group(['prefix' => '/admin', 'middleware' => ['auth']], function () {
+    Route::get('/inns/{id}/edit', 'AdminController@editInn');
+    Route::get('/inns/add', 'AdminController@addInn');
+});

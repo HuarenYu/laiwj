@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Inn;
 use Auth;
+use Gate;
 
 class InnController extends Controller
 {
@@ -111,6 +112,9 @@ class InnController extends Controller
             'detail' => 'required',
         ]);
         $inn = Inn::findOrFail($id);
+        if (Gate::denies('update-inn', $inn)) {
+            return response('permission denied', 401);
+        }
         $inn->name = $request->name;
         $inn->hostName = $request->hostName;
         $inn->hostPhone = $request->hostPhone;
