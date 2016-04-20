@@ -42,6 +42,8 @@
         </div>
     </form>
 </div>
+@endsection
+@section('script')
 <script src="/jquery-ui/jquery-ui.min.js"></script>
 <script>
     $.datepicker.regional['zh-CN'] = {
