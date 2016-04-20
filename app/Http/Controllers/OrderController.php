@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Inn;
 use App\Order;
 use Auth;
+use DB;
 
 use Carbon\Carbon;
 
@@ -53,17 +54,21 @@ class OrderController extends Controller
             'end_date' => 'required|date',
             'inn_id' => 'required|numeric',
         ]);
-
+        $tomorrow = Carbon::tomorrow();
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
+        if ($startDate->lt($tomorrow)) {
+            return response('入住日期必须从明天开始', 401);
+        }
         if ($endDate->lte($startDate)) {
-            return response('入住日期必须在结束日期之前', 401);
+            return response('入住日期必须在离开日期之前', 401);
         }
         DB::beginTransaction();
-        $inn = DB::table('inns')->where('id', '=', $request->inn_id)->lockForUpdate()->get();
+        $inn = DB::table('inns')->where('id', '=', $request->inn_id)->lockForUpdate()->first();
         if (empty($inn)) {
             return response('客栈id错误', 401);
         }
+
         $innSchedule = json_decode($inn->schedule);
         foreach ($innSchedule as $bookDate) {
             $tmpDate = Carbon::parse($bookDate);
@@ -86,11 +91,11 @@ class OrderController extends Controller
         $order->customer_id = Auth::user()->id;
         $order->customer_name = $request->customer_name;
         $order->customer_phone = $request->customer_phone;
-        $order->customer_count = $request->$customer_count;
+        $order->customer_count = $request->customer_count;
         $order->start_date = $request->start_date;
         $order->end_date = $request->end_date;
         $order->per_price = $inn->price;
-        $order->total_price = $inn->price * $request->customer_count * count($bookDates);
+        $order->total_price = $inn->price * intval($request->customer_count) * count($bookDates);
         $order->inn_id = $inn->id;
         $order->save();
         DB::commit();

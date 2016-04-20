@@ -78,12 +78,12 @@
     $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 </script>
 <script>
-    var array = ["2016-04-18", "2016-04-16", "2016-04-19"];
+    var innSchedule = {!! $inn->schedule !!};
     $.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd',
         beforeShowDay: function(date){
             var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-            return [ array.indexOf(string) == -1 ]
+            return [ innSchedule.indexOf(string) == -1 ]
         }
     });
     $('input[name=start_date]').datepicker();
@@ -94,10 +94,10 @@
         orders.
         add($(this).serialize()).
         then(function (resp) {
-
+            window.location = '/user/order/' + resp.id;
         }).
         fail(function (err) {
-            alert(JSON.stringify(err.responseJSON));
+            alert(err.responseText);
         });
     });
 </script>

@@ -15,7 +15,7 @@ Route::get('/', 'IndexController@index');
 
 Route::get('/inns/{id}', 'InnController@detail');
 
-Route::get('/inns/{id}/order', 'InnController@order');
+Route::get('/inns/{id}/order', 'InnController@order')->middleware(['auth']);
 
 Route::group(['prefix' => '/api'], function () {
 

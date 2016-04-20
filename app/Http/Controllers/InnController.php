@@ -54,7 +54,7 @@ class InnController extends Controller
         $inn->name = $request->name;
         $inn->hostName = $request->hostName;
         $inn->hostPhone = $request->hostPhone;
-        $inn->price = $request->price;
+        $inn->price = doubleval($request->price);
         $image = isset($request->image) ? $request->image : 'default.jpg';
         $inn->images = json_encode([$image]);
         $inn->detail = $request->detail;
@@ -64,6 +64,7 @@ class InnController extends Controller
         $inn->city = '黎平';
         $inn->owner_id = Auth::user()->id;
         $inn->status = 'pending';
+        $inn->schedule = '[]';
         $inn->save();
         return response()->json($inn);
     }
