@@ -29,7 +29,9 @@ class UserController extends Controller
 
     public function trip()
     {
-        return view('user.trip');
+        $user = Auth::user();
+        $trips = $user->trips()->with('inn')->orderBy('id', 'desc')->get();
+        return view('user.trip', ['trips' => $trips]);
     }
 
     public function tripDetail($id)

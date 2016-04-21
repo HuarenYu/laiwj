@@ -269,3 +269,12 @@ input[type="checkbox"],
         }
     }
 }
+.trips {
+    padding: 10px;
+    .trip {
+        border: 1px solid #dce0e0;
+        border-radius: 2px;
+        background-color: #fff;
+        padding: 10px;
+    }
+}
