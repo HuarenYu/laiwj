@@ -6,7 +6,7 @@
 <div class="inn-detail">
     <div class="inn">
         <a class="inn-captures" href="javascript:;">
-            <img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ json_decode($inn->images)[0] }}?imageView2/1/w/800/h/600/q/100/format/jpg" alt="{{ $inn->name }}">
+            <img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ $inn->images[0] }}?imageView2/1/w/800/h/600/q/100/format/jpg" alt="{{ $inn->name }}">
             <div class="inn-price">
                 <sup>￥</sup>{{ $inn->price }}
             </div>
@@ -24,6 +24,13 @@
     <div class="inn-desc">
         {!! $inn->detail !!}
     </div>
+</div>
+<div class="inn-albums">
+    @for($i = 1; $i < count($inn->images); $i++)
+        <div class="album">
+        <img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ $inn->images[$i] }}?imageView2/1/w/800/h/600/q/100/format/jpg" alt="images">
+        </div>
+    @endfor
 </div>
 <div class="order-btn">
     <a href="/inns/{{ $inn->id }}/order" class="btn btn-primary btn-block">立即预定</a>

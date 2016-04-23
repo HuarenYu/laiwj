@@ -63,7 +63,7 @@ body {
     }
 }
 .inn-detail {
-    margin-bottom: 100px;
+    margin-bottom: 20px;
     .inn {
         margin-bottom: 0;
     }
@@ -276,5 +276,19 @@ input[type="checkbox"],
         border-radius: 2px;
         background-color: #fff;
         padding: 10px;
+    }
+}
+.inn-albums {
+    background-color: #fff;
+    padding: 10px 10px 100px;
+    border-top: 1px solid #dce0e0;
+    h1 {
+        font-size: 18px;
+    }
+    .album {
+        img {
+            max-width: 100%;
+            text-align: center;
+        }
     }
 }

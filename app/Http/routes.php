@@ -23,6 +23,8 @@ Route::group(['prefix' => '/api'], function () {
 
     Route::resource('/orders', 'OrderController');
 
+    Route::put('/inns/{id}/addImageToAlbum', 'InnController@addImageToAlbum');
+
 });
 
 Route::group(['prefix' => '/user', 'middleware' => ['auth']], function () {

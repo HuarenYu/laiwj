@@ -15,11 +15,10 @@ class WeixinController extends Controller
 
     public function message()
     {
-        Log::info('request arrived.'); 
         
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function ($message) use ($wechat) {
-
+            $reply = '欢迎关注来我家呗，在这里你拥有的不只是一次旅行，而是像走亲访友一样的去深度体验当地的风景，人文，美食，民风，民俗。立刻出发吧！';
             switch ($message->MsgType)
             {
             case 'event':
@@ -46,7 +45,6 @@ class WeixinController extends Controller
                         $newUser->save();
                     } else {
                         //如果重新关注
-                        $oldUser->openid = $user->openid;
                         $oldUser->name = $user->nickname;
                         $oldUser->headimgurl = $user->headimgurl;
                         $oldUser->sex = $user->sex;
@@ -69,33 +67,31 @@ class WeixinController extends Controller
                 break;
             case 'text':
                 # 文字消息...
-                break;
+                //break;
             case 'image':
                 # 图片消息...
-                break;
+                //break;
             case 'voice':
                 # 语音消息...
-                break;
+                //break;
             case 'video':
                 # 视频消息...
-                break;
+                //break;
             case 'location':
                 # 坐标消息...
-                break;
+                //break;
             case 'link':
                 # 链接消息...
-                break;
+                //break;
                 // ... 其它消息
             default:
                 # code...
+                $reply = '你好！有问题请加微信：18514031568';
                 break;
             }
-
-            return '立刻体验这独一无二的旅行吧！';
+            return $reply;
 
         });
-
-        Log::info('return response.');
 
         return $wechat->server->serve();
     }

@@ -140,7 +140,8 @@ class InnController extends Controller
 
     public function detail($id)
     {
-        $inn = Inn::with('host')->findOrFail($id);
+        $inn = Inn::with('host')->with('albums')->findOrFail($id);
+        $inn->images = json_decode($inn->images);
         return view('inn.detail', ['inn' => $inn]);
     }
 
@@ -148,5 +149,21 @@ class InnController extends Controller
     {
         $inn = Inn::with('host')->findOrFail($id);
         return view('inn.order', ['inn' => $inn]);
+    }
+
+    public function addImageToAlbum(Request $request, $id)
+    {
+        if (!Auth::check()) {
+            return response('permission denied', 401);
+        }
+        $inn = Inn::findOrFail($id);
+        if (Gate::denies('update-inn', $inn)) {
+            return response('permission denied', 401);
+        }
+        $images = json_decode($inn->images);
+        $images[] = $request->image;
+        $inn->images = json_encode($images);
+        $inn->save();
+        return response()->json($inn);
     }
 }

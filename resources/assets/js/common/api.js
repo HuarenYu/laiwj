@@ -26,6 +26,13 @@
             data: inn
         });
     };
+    inns.addImageToAlbum = function (inn) {
+        return $.ajax({
+            url: innsUrl + inn.id + '/addImageToAlbum',
+            method: 'PUT',
+            data: inn
+        });
+    }
 
     //订单
     var orders = API.orders = {};

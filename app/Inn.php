@@ -17,4 +17,9 @@ class Inn extends Model
         return $this->hasMany('App\Orders', 'inn_id');
     }
 
+    public function albums()
+    {
+        return $this->hasMany('App\Album', 'inn_id');
+    }
+
 }
