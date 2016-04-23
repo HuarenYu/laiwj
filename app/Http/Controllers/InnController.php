@@ -121,7 +121,9 @@ class InnController extends Controller
         $inn->price = $request->price;
         $inn->detail = $request->detail;
         if ($request->image && $request->image != '') {
-            $inn->images = json_encode([$request->image]);
+            $images = json_decode($inn->images, true);
+            array_unshift($images, $request->image);
+            $inn->images = json_encode($images);
         }
         $inn->save();
         return response()->json($inn);

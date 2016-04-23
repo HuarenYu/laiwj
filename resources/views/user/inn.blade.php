@@ -155,12 +155,6 @@
             }
             var action = $(this).data('action');
             if (action === 'create') {
-                /*
-                if (!inn.image || inn.image === '') {
-                    alert('你的图片不能为空');
-                    return;
-                }
-                */
                 API.inns.add(inn).
                 then(function (resp) {
                     alert('添加成功');
@@ -245,6 +239,7 @@
                     var res = JSON.parse(info);
                     //var sourceLink = domain + '/' + res.key; //获取上传成功后的文件的Url
                     inn.image = res.key;
+                    alert('上传成功');
                 },
                 'Error': function(up, err, errTip) {
                     //上传出错时,处理相关的事情
