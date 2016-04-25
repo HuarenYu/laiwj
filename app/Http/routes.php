@@ -50,6 +50,8 @@ Route::group(['prefix' => '/weixin'], function () {
 
     Route::get('/createMenu', 'WeixinController@createMenu');
 
+    Route::match(['get', 'post'], '/payNotify', 'WeixinController@payNotify');
+
 });
 
 Route::get('/auth/login/weixin', 'Auth\AuthController@weixinLogin');
