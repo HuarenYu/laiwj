@@ -109,23 +109,18 @@ class WeixinController extends Controller
         $buttons = [
             [
                 'type' => 'view',
-                'name' => '出发',
+                'name' => '入住',
                 'url'  => 'http://laiwj.com'
             ],
             [
-                'name'       => '我的',
-                'sub_button' => [
-                    [
-                        'type' => 'view',
-                        'name' => '行程',
-                        'url'  => 'http://laiwj.com/user/trip'
-                    ],
-                    [
-                        'type' => 'view',
-                        'name' => '家',
-                        'url'  => 'http://laiwj.com/user/inn'
-                    ],
-                ],
+                'type' => 'view',
+                'name' => '加盟',
+                'url'  => 'http://laiwj.com/user/inn'
+            ],
+            [
+                'type' => 'view',
+                'name' => '众筹',
+                'url'  => 'http://laiwj.com/user/crowdfunding'
             ],
         ];
         $menu->add($buttons);

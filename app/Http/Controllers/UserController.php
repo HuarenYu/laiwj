@@ -11,7 +11,7 @@ use Gate;
 use App\User;
 use App\Order;
 use EasyWeChat\Payment\Order as WeixinOrder;
-
+use App\FreeTry;
 
 class UserController extends Controller
 {
@@ -59,6 +59,32 @@ class UserController extends Controller
         }
         $config = $payment->configForJSSDKPayment($prepayId);
         return view('user.tripDetail', ['order' => $order, 'config' => $config]);
+    }
+
+    public function freeTrip()
+    {
+        return view('user.freeTrip');
+    }
+
+    public function freeTripSignup(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:20',
+            'phone' => 'required|numeric|max:20',
+            'introduce' => 'required:max:255',
+        ]);
+        $freeTry = new FreeTry;
+        $freeTry->user_id = Auth::user()->id;
+        $freeTry->name = $request->name;
+        $freeTry->phone = $request->phone;
+        $freeTry->introduce = $request->introduce;
+        $freeTry->save();
+        return response()->json($freeTry);
+    }
+
+    public function crowdfunding()
+    {
+        return view('user.crowdfunding');
     }
 
 }

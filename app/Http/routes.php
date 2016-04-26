@@ -33,7 +33,8 @@ Route::group(['prefix' => '/user', 'middleware' => ['auth']], function () {
     Route::get('/inn', 'UserController@inn');
     Route::get('/trip', 'UserController@trip');
     Route::get('/trip/{id}', 'UserController@tripDetail');
-    Route::get('/freeTrip/signup', 'UserController@freeTrip');
+    Route::get('/freeTrip', 'UserController@freeTrip');
+    Route::get('/crowdfunding', 'UserController@crowdfunding');
     Route::post('/freeTrip/signup', 'UserController@freeTripSignup');
 
 });
