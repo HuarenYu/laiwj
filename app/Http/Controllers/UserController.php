@@ -70,7 +70,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:20',
-            'phone' => 'required|numeric|max:20',
+            'phone' => 'required|max:20',
             'introduce' => 'required:max:255',
         ]);
         $freeTry = new FreeTry;
