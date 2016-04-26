@@ -18,7 +18,13 @@ class WeixinController extends Controller
         
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function ($message) use ($wechat) {
-            $reply = '欢迎关注来我家呗，在这里你拥有的不只是一次旅行，而是像走亲访友一样的去深度体验当地的风景，人文，美食，民风，民俗。立刻出发吧！';
+            $reply = '你好，欢迎关注“来我家呗！”
+
+来一次走亲访友的旅行，同吃、同住、同劳动，深度体验当地特色文化生活！
+
+
+欢迎参加“五一”期间3天免费体验活动！
+“<a href="http://laiwj.com/user/freeTrip">点击立即报名申请</a>”';
             switch ($message->MsgType)
             {
             case 'event':
