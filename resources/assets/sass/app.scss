@@ -24,8 +24,10 @@ body {
         position: relative;
         img {
             width: 100%;
+            display: block;
             vertical-align: top;
         }
+        min-height: 100px;
     }
     .inn-price {
         position: absolute;
