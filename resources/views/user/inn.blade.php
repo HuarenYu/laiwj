@@ -325,7 +325,7 @@
                     //var sourceLink = domain + '/' + res.key; //获取上传成功后的文件的Url
                     //inn.image = res.key;
                     API.inns.addImageToAlbum({
-                        id: {{ $inn->id }},
+                        id: {{ empty($inn) ? '' : $inn->id }},
                         image: res.key,
                         _token: $('input[name=_token]').val()
                     }).
