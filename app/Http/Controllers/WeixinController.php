@@ -23,7 +23,7 @@ class WeixinController extends Controller
 来一次走亲访友的旅行，同吃、同住、同劳动，深度体验当地特色文化生活！
 
 
-欢迎参加“五一”期间3天免费体验活动！
+欢迎参加五月春耕3天免费体验活动！
 “<a href="http://laiwj.com/user/freeTrip">点击立即报名申请</a>”';
             switch ($message->MsgType)
             {
