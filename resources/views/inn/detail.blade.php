@@ -2,13 +2,25 @@
 
 @section('title', $inn->hostName.'的家')
 
+@section('stylesheet')
+<link rel="stylesheet" href="/unslider/css/unslider.css">
+<link rel="stylesheet" href="/unslider/css/unslider-dots.css">
+@endsection
+
 @section('content')
 <div class="inn-detail">
     <div class="inn">
         <a class="inn-captures" href="javascript:;">
-            <img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ $inn->images[0] }}?imageView2/1/w/800/h/600/q/100/format/jpg" alt="{{ $inn->name }}">
+            <div class="img-slider">
+                <ul>
+                    @foreach($inn->images as $image)
+                    <li><img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ $image }}?imageView2/1/w/800/h/600/q/100/format/jpg" alt="{{ $inn->name }}"></li>
+                    @endforeach
+                </ul>
+            </div>
             <div class="inn-price">
                 <sup>￥</sup>{{ $inn->price }}
+                <p class="comment">(每人每天住宿+餐饮)</p>
             </div>
         </a>
     </div>
@@ -25,18 +37,23 @@
         {!! $inn->detail !!}
     </div>
 </div>
-<div class="inn-albums">
-    @for($i = 1; $i < count($inn->images); $i++)
-        <div class="album">
-        <img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ $inn->images[$i] }}?imageView2/1/w/800/h/600/q/100/format/jpg" alt="images">
-        </div>
-    @endfor
-</div>
 <div class="order-btn">
     <!--
     <a href="/inns/{{ $inn->id }}/order" class="btn btn-primary btn-block">立即预定</a>
     -->
     <a href="/user/freeTrip" class="btn btn-primary btn-block">报名免费体验</a>
 </div>
+@endsection
+
+@section('script')
+<script src="/unslider/js/unslider-min.js"></script>
+<script>
+    $(function() {
+        $('.img-slider').unslider({
+            autoplay: true,
+            arrows: false
+        });
+    });
+</script>
 @endsection
 
