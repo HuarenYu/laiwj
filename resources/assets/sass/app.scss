@@ -332,7 +332,7 @@ input[type="checkbox"],
 .footer {
     background-color: #fff;
     overflow: hidden;
-    padding: 20px 0 80px;
+    padding: 20px 0 40px;
     border-top: 1px solid #dce0e0;
     .left {
         width: 100%;
@@ -347,6 +347,17 @@ input[type="checkbox"],
         .title {
             font-size: 14px;
             font-weight: bold;
+        }
+    }
+}
+.load-more {
+    padding: 10px 0;
+    text-align: center;
+}
+body {
+    &.home-detail {
+        .footer {
+            padding: 20px 0 100px;
         }
     }
 }

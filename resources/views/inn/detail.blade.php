@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="/unslider/css/unslider-dots.css">
 @endsection
 
+@section('bodyClass')
+class="home-detail"
+@endsection
+
 @section('content')
 <div class="inn-detail">
     <div class="inn">
