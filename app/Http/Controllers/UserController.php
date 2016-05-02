@@ -72,12 +72,22 @@ class UserController extends Controller
             'name' => 'required|max:20',
             'phone' => 'required|max:20',
             'introduce' => 'required:max:255',
+            'gender' => 'required:max:255',
+            'career' => 'required',
+            'age' => 'required',
+            'from' => 'required',
+            'exp_time' => 'required',
         ]);
         $freeTry = new FreeTry;
         $freeTry->user_id = Auth::user()->id;
         $freeTry->name = $request->name;
         $freeTry->phone = $request->phone;
         $freeTry->introduce = $request->introduce;
+        $freeTry->career = $request->career;
+        $freeTry->age = $request->age;
+        $freeTry->from = $request->from;
+        $freeTry->gender = $request->gender;
+        $freeTry->exp_time = $request->exp_time;
         $freeTry->save();
         return response()->json($freeTry);
     }

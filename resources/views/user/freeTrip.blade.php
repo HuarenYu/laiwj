@@ -11,8 +11,32 @@
                 <input name="name" type="text" required>
             </div>
             <div class="form-group-100">
+                <label for="">性别</label>
+                <select name="gender" id="">
+                    <option value=""></option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+            <div class="form-group-100">
+                <label for="">职业</label>
+                <input name="career" type="text" required>
+            </div>
+            <div class="form-group-100">
+                <label for="">年龄</label>
+                <input name="age" type="text" required>
+            </div>
+            <div class="form-group-100">
                 <label for="">联系电话</label>
                 <input name="phone" type="text" required>
+            </div>
+            <div class="form-group-100">
+                <label for="">来自哪里?</label>
+                <input name="from" type="text" required>
+            </div>
+            <div class="form-group-100">
+                <label for="">什么时候来体验？</label>
+                <input name="exp_time" type="text" required>
             </div>
             <div class="form-group-100">
                 <label for="">介绍一下你自己</label>
