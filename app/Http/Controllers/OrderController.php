@@ -54,14 +54,14 @@ class OrderController extends Controller
             'end_date' => 'required|date',
             'inn_id' => 'required|numeric',
         ]);
-        $tomorrow = Carbon::tomorrow();
+        $today = Carbon::today();
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
-        if ($startDate->lt($tomorrow)) {
-            return response('入住日期必须从明天开始', 401);
+        if ($startDate->lt($today)) {
+            return response('入住日期不能是过去', 400);
         }
         if ($endDate->lte($startDate)) {
-            return response('入住日期必须在离开日期之前', 401);
+            return response('入住日期必不能在离开日期之后', 400);
         }
         DB::beginTransaction();
         $inn = DB::table('inns')->where('id', '=', $request->inn_id)->lockForUpdate()->first();
@@ -78,7 +78,7 @@ class OrderController extends Controller
         }
         //预定的日期
         $bookDates = [];
-        while ($startDate->lte($endDate)) {
+        while ($startDate->lt($endDate)) {
             $bookDates[] = $startDate->toDateString();
             $startDate->addDay(1);
         }
@@ -96,7 +96,11 @@ class OrderController extends Controller
         $order->end_date = $request->end_date;
         $order->per_price = $inn->price;
         $order->total_price = $inn->price * intval($request->customer_count) * count($bookDates);
+        $order->book_count = count($bookDates);
         $order->inn_id = $inn->id;
+        $order->status = 'created';
+        $order->save();
+        $order->out_trade_no = Carbon::now()->format('YmdHis') . $order->id;
         $order->save();
         DB::commit();
         return response()->json($order);

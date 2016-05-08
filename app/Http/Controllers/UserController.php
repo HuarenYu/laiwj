@@ -12,6 +12,7 @@ use App\User;
 use App\Order;
 use EasyWeChat\Payment\Order as WeixinOrder;
 use App\FreeTry;
+use Log;
 
 class UserController extends Controller
 {
@@ -42,23 +43,59 @@ class UserController extends Controller
         if (Gate::denies('view-order', $order)) {
             return response('permission denied', 401);
         }
+        return view('user.tripDetail', ['trip' => $order]);
+    }
+
+    public function tripPay($id)
+    {
+        $order = Order::with('inn')->findOrFail($id);
+        if (Gate::denies('view-order', $order)) {
+            return response('permission denied', 401);
+        }
+        if ($order->status != 'created' || $order->status != 'pay_failed') {
+            return view('user.tripPay', ['error' => '该订单状态下无法支付']);
+        }
         $wechat = app('wechat');
         $payment = $wechat->payment;
-        $attributes = [
-            'body'             => 'iPad mini 16G 白色',
-            'detail'           => 'iPad mini 16G 白色',
-            'out_trade_no'     => '1217752501201407033233368018',
-            'total_fee'        => 5388,
-            'notify_url'       => 'http://xxx.com/order-notify', // 支付结果通知网址，如果不设置则会使用配置里的默认地址
-            // ...
-        ];
-        $order = new WeixinOrder($attributes);
-        $result = $payment->prepare($order);
-        if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
-            $prepayId = $result->prepay_id;
+        $js = $wechat->js;
+        $user = Auth::user();
+        //生成微信支付订单
+        $total_fee = $order->total_price * 100;
+        //管理员测试
+        if ($user->id === '1') {
+            $total_fee = 10;
         }
-        $config = $payment->configForJSSDKPayment($prepayId);
-        return view('user.tripDetail', ['order' => $order, 'config' => $config]);
+        $attributes = [
+            'body'             => '来我家呗订单',
+            'detail'           => '预定' . $order->inn->name,
+            'out_trade_no'     => $order->out_trade_no,
+            'total_fee'        => $total_fee,//微信的total_fee是按照分计算的
+            'trade_type'       => 'JSAPI',
+            'notify_url'       => 'http://laiwj.com/weixin/payNotify',
+            'openid'           => $user->openid,
+        ];
+        $wxOrder = new WeixinOrder($attributes);
+        $result = $payment->prepare($wxOrder);
+        if ($result->return_code == 'SUCCESS' &&
+            $result->result_code == 'SUCCESS') {
+            Log::info('生成微信支付订单成功', ['user_id' => $user->id,
+                'order_id' => $order->id,
+                'result' => $result,
+            ]);
+            $prepayId = $result->prepay_id;
+            $order->prepay_id = $prepayId;
+            $order->save();
+            //生成微信js sdk 参数
+            $payConfig = $payment->configForPayment($order->prepay_id, false);
+            //生成js sdk 配置
+            $jsConfig = $js->config(['chooseWXPay'], false, false, false);
+            return view('user.tripPay', ['payConfig' => $payConfig, 'jsConfig' => $jsConfig]);
+        }
+        Log::error('生成微信支付订单错误', ['user_id' => $user->id,
+            'order_id' => $order->id,
+            'result' => $result,
+        ]);
+        return view('user.tripPay', ['error' => '微信支付系统错误']);
     }
 
     public function freeTrip()
