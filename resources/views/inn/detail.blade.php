@@ -18,7 +18,7 @@ class="home-detail"
             <div class="img-slider">
                 <ul>
                     @foreach($inn->images as $image)
-                    <li><img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ $image }}?imageView2/1/w/800/h/600/q/100/format/jpg" alt="{{ $inn->name }}"></li>
+                    <li><img src="//7xqkeq.com1.z0.glb.clouddn.com/{{ $image }}?imageView2/1/w/460/h/320/q/100/format/jpg" alt="{{ $inn->name }}"></li>
                     @endforeach
                 </ul>
             </div>
