@@ -30,7 +30,7 @@ class="home-detail"
     </div>
     <div class="inn-footer">
         <div class="host">
-            <a href="/users/123"><img src="{{ $inn->host->headimgurl }}" alt="{{ $inn->host->name }}"></a>
+            <a href="javascript:;"><img src="{{ $inn->host->headimgurl }}" alt="{{ $inn->host->name }}"></a>
         </div>
         <div class="name"><p>{{ $inn->name }}</p></div>
         <div class="location">
