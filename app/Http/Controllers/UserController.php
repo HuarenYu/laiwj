@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -34,7 +35,17 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $trips = $user->trips()->with('inn')->orderBy('id', 'desc')->get();
-        return view('user.trip', ['trips' => $trips]);
+        $orderStatus = [
+            'created' => '等待支付',
+            'pay_succeed' => '支付成功',
+            'pay_failed' => '支付失败，请重新预定',
+            'refunding' => '申请退款中',
+            'canceled' => '行程取消',
+            'finished' => '行程完成',
+            'refunded' => '退款完成',
+            'refund_failed' => '退款失败',
+        ];
+        return view('user.trip', ['trips' => $trips, 'orderStatus' => $orderStatus]);
     }
 
     public function tripDetail($id)
@@ -61,6 +72,25 @@ class UserController extends Controller
         $payment = $wechat->payment;
         $js = $wechat->js;
         $user = Auth::user();
+        //如果已经生成了prepay_id
+        if ($order->prepay_id) {
+            $now = Carbon::now();
+            $orderCreateTime = Carbon::parse($order->created_at);
+            $orderCreateTime->addHours(1);
+            if ($now->gt($orderCreateTime)) {
+                DB::beginTransaction();
+                $order->releaseBookedDays();
+                $order->status = 'canceled';
+                $order->save();
+                DB::commit();
+                return view('user.tripPay', ['error' => '订单已经过期，请重新预定']);
+            }
+            //生成微信js sdk 参数
+            $payConfig = $payment->configForPayment($order->prepay_id, false);
+            //生成js sdk 配置
+            $jsConfig = $js->config(['chooseWXPay'], false, false, false);
+            return view('user.tripPay', ['payConfig' => $payConfig, 'jsConfig' => $jsConfig]);
+        }
         //生成微信支付订单
         $total_fee = $order->total_price * 100;
         //管理员测试

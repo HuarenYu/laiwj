@@ -10,30 +10,12 @@ use App\Inn;
 use App\Order;
 use Auth;
 use DB;
+use Gate;
 
 use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -61,7 +43,7 @@ class OrderController extends Controller
             return response('入住日期不能是过去', 400);
         }
         if ($endDate->lte($startDate)) {
-            return response('入住日期必不能在离开日期之后', 400);
+            return response('入住日期不能在离开日期之后', 400);
         }
         DB::beginTransaction();
         $inn = DB::table('inns')->where('id', '=', $request->inn_id)->lockForUpdate()->first();
@@ -72,8 +54,11 @@ class OrderController extends Controller
         $innSchedule = json_decode($inn->schedule);
         foreach ($innSchedule as $bookDate) {
             $tmpDate = Carbon::parse($bookDate);
-            if ($tmpDate->gte($startDate) && $tmpDate->lte($endDate)) {
-                return response('不能包含已经被预订的日期', 401);
+            if ($tmpDate->gte($startDate) && $tmpDate->lt($endDate)) {
+                return response()->json(['statusCode' => 40001,
+                    'msg' => '不能包含已经被预订的日期',
+                    'inn' => $inn,
+                ]);
             }
         }
         //预定的日期
@@ -106,49 +91,21 @@ class OrderController extends Controller
         return response()->json($order);
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    
+    public function cancel($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $order = Order::findOrFail($id);
+        if (Gate::denies('update-order', $order)) {
+            return response('permission denied', 401);
+        }
+        if ($order->status == 'created') {
+            DB::beginTransaction();
+            $order->releaseBookedDays();
+            $order->status = 'canceled';
+            $order->save();
+            DB::commit();
+            return response()->json(['status' => 'success', 'msg' => '取消成功']);
+        }
+        return response()->json(['status' => 'fail', 'msg' => '取消失败']);
     }
 }

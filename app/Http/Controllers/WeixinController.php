@@ -21,11 +21,7 @@ class WeixinController extends Controller
         $wechat->server->setMessageHandler(function ($message) use ($wechat) {
             $reply = '你好，欢迎关注“来我家呗！”
 
-来一次走亲访友的旅行，同吃、同住、同劳动，深度体验当地特色文化生活！
-
-
-欢迎参加五月春耕3天免费体验活动！
-“<a href="http://laiwj.com/user/freeTrip">点击立即报名申请</a>”';
+来一次走亲访友的旅行，同吃、同住、同劳动，深度体验当地特色文化生活！';
             switch ($message->MsgType)
             {
             case 'event':
@@ -93,7 +89,7 @@ class WeixinController extends Controller
                 // ... 其它消息
             default:
                 # code...
-                $reply = '你好！有问题请加微信：18514031568';
+                $reply = '你好！有问题请加微信：huarenyu';
                 break;
             }
             return $reply;
@@ -154,7 +150,11 @@ class WeixinController extends Controller
                 $order->status = 'pay_succeed';
                 Log::info('微信支付成功通知', ['notify' => $notify]);
             } else { // 用户支付失败
+                DB::beginTransaction();
+                $order->releaseBookedDays();
                 $order->status = 'pay_failed';
+                $order->save();
+                DB::commit();
                 Log::error('微信支付失败通知', ['notify' => $notify]);
             }
 

@@ -14,6 +14,8 @@ Route::group(['prefix' => '/api'], function () {
 
     Route::put('/inns/{id}/addImageToAlbum', 'InnController@addImageToAlbum');
 
+    Route::put('/orders/{id}/cancel', 'OrderController@cancel');
+
 });
 
 Route::group(['prefix' => '/user', 'middleware' => ['auth']], function () {

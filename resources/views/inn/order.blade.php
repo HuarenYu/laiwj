@@ -10,7 +10,7 @@
 <div class="order-form">
     <div class="price">
         <div><sup>￥</sup>{{ $inn->price}}</div>
-        <div>每天</div>
+        <div>每人每天</div>
     </div>
     <form id="orderForm">
         {{ csrf_field() }}
@@ -96,6 +96,11 @@
         orders.
         add($(this).serialize()).
         then(function (resp) {
+            if (resp.statusCode && resp.statusCode === 40001) {
+                alert(resp.msg);
+                innSchedule = JSON.parse(resp.inn.schedule);
+                return;
+            }
             window.location = '/user/trip/' + resp.id;
         }).
         fail(function (err) {

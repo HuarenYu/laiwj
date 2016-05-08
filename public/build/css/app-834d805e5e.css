@@ -287,14 +287,14 @@ input[type="checkbox"],
 .footer {
   background-color: #fff;
   overflow: hidden;
-  padding: 20px 0 40px;
+  padding: 20px 0;
   border-top: 1px solid #dce0e0; }
   .footer .left {
     width: 100%;
     text-align: center; }
     .footer .left img {
-      width: 64px;
-      height: 64px; }
+      width: 80px;
+      height: 80px; }
   .footer .right {
     padding-right: 12.5px; }
     .footer .right .title {

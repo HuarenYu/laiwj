@@ -50,5 +50,12 @@
         return $.post(ordersUrl, order);
     };
 
+    orders.cancel = function(id) {
+        return $.ajax({
+            url: ordersUrl + id + '/cancel',
+            method: 'PUT'
+        });
+    };
+
 
 })(window, jQuery);

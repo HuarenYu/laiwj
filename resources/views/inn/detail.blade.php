@@ -43,11 +43,7 @@ class="home-detail"
 </div>
 @include('_partials.footer')
 <div class="order-btn">
-    @can('admin', $inn)
-        <a href="/inns/{{ $inn->id }}/order" class="btn btn-primary btn-block">立即预定</a>
-    @else
-        <a href="/user/freeTrip" class="btn btn-primary btn-block">报名免费体验</a>
-    @endcan
+    <a href="/inns/{{ $inn->id }}/order" class="btn btn-primary btn-block">立即预定</a>
 </div>
 @endsection
 
