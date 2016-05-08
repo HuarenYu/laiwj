@@ -52,9 +52,11 @@ class UserController extends Controller
         if (Gate::denies('view-order', $order)) {
             return response('permission denied', 401);
         }
-        if ($order->status != 'created' || $order->status != 'pay_failed') {
+
+        if ($order->status != 'created') {
             return view('user.tripPay', ['error' => '该订单状态下无法支付']);
         }
+
         $wechat = app('wechat');
         $payment = $wechat->payment;
         $js = $wechat->js;
