@@ -115,9 +115,14 @@ class WeixinController extends Controller
                 'url'  => 'http://laiwj.com/user/inn'
             ],
             [
-                'type' => 'view',
-                'name' => '众筹',
-                'url'  => 'http://laiwj.com/user/crowdfunding'
+                'name' => '我的',
+                'sub_button' => [
+                    [
+                        "type" => "view",
+                        "name" => "行程",
+                        "url"  => "http://laiwj.com/user/trip"
+                    ],
+                ],
             ],
         ];
         $menu->add($buttons);
