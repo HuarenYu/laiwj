@@ -11,6 +11,7 @@ use App\Order;
 use Auth;
 use DB;
 use Gate;
+use Log;
 
 use Carbon\Carbon;
 
@@ -88,6 +89,28 @@ class OrderController extends Controller
         $order->out_trade_no = Carbon::now()->format('YmdHis') . $order->id;
         $order->save();
         DB::commit();
+        //发订单通知给管理员
+        $wechat = app('wechat');
+        $notice = $wechat->notice;
+        $userId = 'oNlzBw0WPkzG4N-55POyjUkh0GsM';
+        $templateId = 'j8u_CT-E6E_3UJ9pZAWXqI4uI0vpFAwP34ayUEKfPF4';
+        $url = 'http://laiwj.com/admin/orders';
+
+        $data = array(
+            'first'  => '你有新的订单',
+            'OrderId'   => $order->id,
+            'ProductId'  => $inn->id,
+            'ProductName' => $inn->name,
+            'remark' => "预定人：{$order->customer_name}
+            联系电话：{$order->customer_phone}
+            预定日期：{$order->start_date}至{$order->end_date}
+            预定天数：{$order->book_count}
+            入住人数：{$order->customer_count}
+            预定金额：{$order->total_price}
+            请及时处理！",
+        );
+        $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
+        Log::info('发送了订单通知', ['messageId' => $messageId]);
         return response()->json($order);
 
     }
