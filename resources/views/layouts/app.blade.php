@@ -15,5 +15,6 @@
     <script src="{{ elixir('js/lib.js') }}"></script>
     <script src="{{ elixir('js/common.js') }}"></script>
     @yield('script')
+    <script src="http://s4.cnzz.com/stat.php?id=1259053629&web_id=1259053629" language="JavaScript"></script>
 </body>
 </html>
