@@ -35,6 +35,7 @@ class="home-detail"
         <div class="name"><p>{{ $inn->name }}</p></div>
         <div class="location">
             <p>{{ $inn->country }},{{ $inn->province }},{{ $inn->city }},{{ $inn->hostName }}</p>
+            <p style="margin-top:10px;"><a href="tel:{{ $inn->hostPhone }}" class="btn btn-primary btn-small">联系主人</a></p>
         </div>
     </div>
     <div class="inn-desc">
